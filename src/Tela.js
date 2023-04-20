@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useState } from "react";
-
-
+import Card from "./Card";
 
 export default function Tela()
 {
@@ -16,8 +15,8 @@ export default function Tela()
         try{
             setPokemon(null);
             /*const pokemon = await axios.get("https://pokeapi.co/api/v2/pokemon/ditto");*/
-            /*const { data } = await axios.get("https://pokeapi.co/api/v2/pokemon/"+pesquisa);*/
-            const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pesquisa}`);
+            const { data } = await axios.get("https://pokeapi.co/api/v2/pokemon/"+pesquisa.toLowerCase());
+            /*const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pesquisa.toLowerCase()}`);*/
             /*console.log(data);*/
             setPokemon(data);
         }
@@ -32,31 +31,12 @@ export default function Tela()
     }
 
 
-     /* exibe o pokemon depois de ser feita uma pesquisa */
-    let cardPokemon = "";
+    /* exibe o pokemon depois de ser feita uma pesquisa */
+    /*let cardPokemon =(pokemon != null) ? <Card /> : "";*/
+    /*let cardPokemon = "";
     if(pokemon!=null){
-        cardPokemon = <div className="card">
-                <div className="card-header">
-                    Nome: <strong>{pokemon.name}</strong>
-                </div>
-                <img src={pokemon.sprites.other['official-artwork'].front_default} className="card-img-top" alt="..." />
-                <div className="card-body">
-                    <p>Altura: <strong>{pokemon.height}</strong></p>
-                    <p>Peso: <strong>{pokemon.weight}</strong></p>
-                    <div>
-                        Habilidades:
-                        <ul>
-                            {
-                                pokemon.abilities.map(function(item)
-                                {
-                                    return (<li key={item.ability.name}>{item.ability.name}</li>)
-                                })
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>;
-    }
+        cardPokemon = <Card />;
+    }*/
 
     return (
         <div>
@@ -64,7 +44,8 @@ export default function Tela()
                 <input type="text" onChange={pokeNome} className="form-control" placeholder="Digite o nome" />
                 <button disabled={pesquisa == ""} onClick={carregaPokemon} className="btn btn-outline-secondary" type="button">Pesquisar</button>
             </div> 
-            {cardPokemon} 
+           
+            {(pokemon != null) ? <Card person={pokemon} /> : "" }
             {(alertErro==true)? <div className="alert alert-danger" role="alert">
             Bichinho não encontrado!
             </div>:""}   
